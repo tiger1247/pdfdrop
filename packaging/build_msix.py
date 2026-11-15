@@ -27,8 +27,13 @@ sys.path.insert(0, SRC)
 APP_FILES = ["main.py", "core.py", "editor.py", "tools.py", "pdfops.py", "wininteg.py", "storeapi.py", "icon.py", "app.ico"]
 STDLIB_SKIP = {"test", "idlelib", "turtledemo", "ensurepip", "venv", "site-packages", "__pycache__",
                "pydoc_data", "lib2to3", "tkinter/test", "unittest/test"}
-# numpy is only used to make test media; it isn't needed at runtime.
-SITE_SKIP = ("pip", "setuptools", "_distutils_hack", "distutils-precedence.pth", "__pycache__", "numpy")
+# PyMuPDF 2.x installs optional AI/layout add-ons (onnxruntime, numpy, networkx...) that PDFDrop
+# never imports; leaving them out saves ~130 MB.
+SITE_SKIP = ("pip", "setuptools", "_distutils_hack", "distutils-precedence.pth", "__pycache__", "numpy",
+             "onnxruntime", "networkx", "google", "protobuf", "psutil", "yaml", "_yaml", "tabulate",
+             "pymupdf4llm", "pymupdf_layout", "pymupdf-layout", "flatbuffers", "packaging", "sympy", "mpmath",
+             "coloredlogs", "humanfriendly")
+SKIP_FILES = ("*.onnx",)  # layout-analysis models inside the pymupdf package
 MAKEAPPX_DIRS = [os.path.join(BUILD, "tools"),
                  os.path.join(os.path.dirname(ROOT), "Send to iPhone", "build", "tools")]
 
@@ -79,7 +84,8 @@ def copy_python(dest):
             continue
         s = os.path.join(VENV_SITE, name)
         if os.path.isdir(s):
-            shutil.copytree(s, os.path.join(site, name), ignore=shutil.ignore_patterns("tests", "__pycache__"))
+            shutil.copytree(s, os.path.join(site, name),
+                            ignore=shutil.ignore_patterns("tests", "__pycache__", *SKIP_FILES))
         else:
             shutil.copy2(s, os.path.join(site, name))
     ver = f"{sys.version_info.major}{sys.version_info.minor}"
