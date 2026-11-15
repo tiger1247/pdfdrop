@@ -1,0 +1,14 @@
+PDFDrop is free software released under the GNU Affero General Public License v3 (see LICENSE).
+Source code: https://github.com/tiger1247/pdfdrop
+
+PDFDrop includes the following third-party software. Each is distributed under its own licence;
+the source code for each is available from the project's website listed below.
+
+PyMuPDF / MuPDF ........ GNU AGPL-3.0 (Artifex)                  https://github.com/pymupdf/PyMuPDF
+  MuPDF bundles FreeType, HarfBuzz, libjpeg, OpenJPEG, jbig2dec, zlib, lcms2, Gumbo, Tesseract
+  and other libraries - see https://mupdf.com/licensing
+Python 3.13 ............ Python Software Foundation License      https://www.python.org/
+  (includes Tcl/Tk, OpenSSL, libffi, zlib, expat, SQLite, bzip2, xz - see python\LICENSE.txt)
+Pillow ................. MIT-CMU License                         https://github.com/python-pillow/Pillow
+tkinterdnd2 / tkdnd .... MIT / BSD-style                         https://github.com/Eliav2/tkinterdnd2
+PyWinRT ................ MIT                                     https://github.com/pywinrt/pywinrt
